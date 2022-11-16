@@ -1,55 +1,32 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-const galleryCards = document.querySelector('.gallery');
-galleryCards.addEventListener('click', onClickShowModal);
 
-const galleryMarkup = galleryItems.map(galleryCardMarkup).join('');
+import SimpleLightbox from "simplelightbox";
 
-galleryCards.insertAdjacentHTML('afterbegin', galleryMarkup);
+import "simplelightbox/dist/simple-lightbox.min.css";
+console.log(galleryItems);
 
-function galleryCardMarkup({ preview, original, description }) {
-  return `<div class="gallery__item">
-  <a class="gallery__link" href="${original}">
-      <img
-        class="gallery__image"
-        src="${preview}"
-        data-source="${original}"
-        alt="${description}"
-      />
-      </a> 
-  </div>`;
-}
+const listEl = document.querySelector('.gallery');
 
-function onClickShowModal(e) {
-  e.preventDefault();
+const listTemplate = (preview, original, description) => `
+<li>
+<a class="gallery__item" href="${original}">
+<img class="gallery__image" src="${preview}" alt="${description}"/>
+</a>
+</li>
+`;
 
-  if (e.target.nodeName !== 'IMG') return;
+const render = () => {
+  const arrayFromListTemplate = galleryItems
+    .map(item => listTemplate(item.preview, item.original, item.description))
+    .join('');
 
-  const gallery = basicLightbox.create(
-    `
-  <div class="modal">
-    <img
-    class="modal__image"
-    src="${e.target.dataset.source}"
-    />
-  </div>
-  `,
-    {
-      onShow: gallery => {
-        window.addEventListener('keydown', onEscPress);
-        gallery.element().querySelector('img').onclick = gallery.close;
-      },
-      onClose: gallery => {
-        window.removeEventListener('keydown', onEscPress);
-      },
-    }
-  );
+  console.log(arrayFromListTemplate);
 
-  function onEscPress(e) {
-    if (e.code === 'Escape') {
-      gallery.close();
-    }
-  }
+  listEl.innerHTML = arrayFromListTemplate;
+};
 
-  gallery.show();
-}
+render();
+const galleryEl = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
