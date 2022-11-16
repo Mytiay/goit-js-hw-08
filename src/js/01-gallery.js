@@ -1,11 +1,11 @@
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
-const galleryCards = document.querySelector(".gallery");
-galleryCards.addEventListener("click", onClickShowModal);
+const galleryCards = document.querySelector('.gallery');
+galleryCards.addEventListener('click', onClickShowModal);
 
-const galleryMarkup = galleryItems.map(galleryCardMarkup).join("");
+const galleryMarkup = galleryItems.map(galleryCardMarkup).join('');
 
-galleryCards.insertAdjacentHTML("afterbegin", galleryMarkup);
+galleryCards.insertAdjacentHTML('afterbegin', galleryMarkup);
 
 function galleryCardMarkup({ preview, original, description }) {
   return `<div class="gallery__item">
@@ -23,7 +23,7 @@ function galleryCardMarkup({ preview, original, description }) {
 function onClickShowModal(e) {
   e.preventDefault();
 
-  if (e.target.nodeName !== "IMG") return;
+  if (e.target.nodeName !== 'IMG') return;
 
   const gallery = basicLightbox.create(
     `
@@ -35,18 +35,18 @@ function onClickShowModal(e) {
   </div>
   `,
     {
-      onShow: (gallery) => {
-        window.addEventListener("keydown", onEscPress);
-        gallery.element().querySelector("img").onclick = gallery.close;
+      onShow: gallery => {
+        window.addEventListener('keydown', onEscPress);
+        gallery.element().querySelector('img').onclick = gallery.close;
       },
-      onClose: (gallery) => {
-        window.removeEventListener("keydown", onEscPress);
+      onClose: gallery => {
+        window.removeEventListener('keydown', onEscPress);
       },
     }
   );
 
   function onEscPress(e) {
-    if (e.code === "Escape") {
+    if (e.code === 'Escape') {
       gallery.close();
     }
   }
