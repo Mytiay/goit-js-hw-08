@@ -14,10 +14,13 @@ render();
 
 function onFormSubmit (e) {
     e.preventDefault();
-    console.log(JSON.parse(localStorage.getItem(storageKey)));
-    e.currentTarget.reset();
-    localStorage.clear();
-    formData = {};
+    if (refs.input.vallue && refs.textarea.value !== "") {
+        console.log(JSON.parse(localStorage.getItem(storageKey)));
+        e.currentTarget.reset();
+        localStorage.clear();
+        formData = {};
+    }
+    return alert('all field must be done');
 };
 
 function onFormCheck (e) {
